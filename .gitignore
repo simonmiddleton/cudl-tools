@@ -1,0 +1,4 @@
+# Downloaded IIIF manifests (re-fetched by build_aerial_map.py)
+.cache/
+__pycache__/
+.claude/
