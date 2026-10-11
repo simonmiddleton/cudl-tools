@@ -379,8 +379,12 @@
     function onSelect(evt) {
       const ann = evt.annotation;
       if (!ann || !ann.data) return;
-      // Leave MapKit's own selection state alone so the same marker can be tapped again.
-      ann.selected = false;
+      // Clear MapKit's selection so the same marker can be tapped again; it only fires
+      // 'select' for an unselected annotation. Deselecting inside this handler doesn't
+      // stick, as MapKit finishes the selection afterwards, so wait until it has.
+      setTimeout(() => {
+        if (map.selectedAnnotation === ann) map.selectedAnnotation = null;
+      }, 0);
 
       if (ann.data.clusterId !== undefined) {
         zoomIntoCluster(ann);
